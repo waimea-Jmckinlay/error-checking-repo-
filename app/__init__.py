@@ -25,7 +25,17 @@ register_error_handlers(app)
 #-----------------------------------------------------------
 @app.get("/")
 def index():
-    return render_template("pages/home.jinja")
+  with connect_db() as client:
+        # Get all the things from the DB
+        
+        sql = "SELECT id, name, pirority FROM task ORDER BY name ASC"
+        result = client.execute(sql)
+        things = result.rows
+
+        # And show them on the page
+        return render_template("pages/home.jinja", things=things)
+
+   
 
 
 #-----------------------------------------------------------

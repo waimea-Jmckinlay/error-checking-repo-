@@ -16,10 +16,20 @@
 
 {% block content %}
 
-    <h1>A Single Thing...</h1>
+    <h1>A Single Thing </h1>
 
 
     <article>
+      <section id="things">
+
+        {% for thing in things %}
+        <p><a href="/thing/{{ thing.id }}">
+        {{ thing.name }}
+        </a></p>
+
+        {% endfor %}
+
+    </section>
 
         <header>
             <h3>{{ thing.name }}</h3>
