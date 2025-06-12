@@ -9,23 +9,23 @@
 
 {% block title %}
 
-    Flask Demo - All Things
+    Flask Demo - All Tasks
 
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>Things...</h1>
+    <h1>Tasks...</h1>
 
 
     <article>
 
         <ul>
-            {% for thing in things %}
+            {% for thing in tasks %}
 
                 <li>
-                    <a href="/thing/{{ thing.id }}">
+                    <a href="/tasks/{{ thing.id }}">
                         {{ thing.name }}
                     </a>
                 </li>
@@ -33,6 +33,8 @@
             {% else %}
 
                 <p>None!</p>
+
+                
 
             {% endfor %}
         </ul>
@@ -42,26 +44,27 @@
 
     <article>
 
-        <h3>Add a New Thing...</h3>
+        <h3>Add a New task</h3>
 
         <form action="/add" method="POST">
 
             <input
                 type="text"
                 name="name"
-                placeholder="Name of new thing"
+                placeholder="Name of new task"
                 required
             >
 
             <input
                 type="number"
-                name="price"
-                min="0"
-                placeholder="Price in dollars"
+                name="pirority"
+                min="1"
+                max="5"
+                placeholder="1-5"
                 required
             >
 
-            <button>Add the Thing</button>
+            <button>Add the task</button>
 
         </form>
 

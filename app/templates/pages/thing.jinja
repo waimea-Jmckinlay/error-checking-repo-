@@ -20,11 +20,11 @@
 
 
     <article>
-      <section id="things">
+      <section id="task">
 
-        {% for thing in things %}
-        <p><a href="/thing/{{ thing.id }}">
-        {{ thing.name }}
+        {% for name in task %}
+        <p><a href="/tasks/{{ task.id }}">
+        {{ task.name }}
         </a></p>
 
         {% endfor %}
@@ -35,16 +35,16 @@
             <h3>{{ thing.name }}</h3>
         </header>
 
-        <p>Price: <strong>${{ thing.price }}</strong></p>
+        <p>pirority: <strong>{{ task.pirority }}</strong></p>
 
         <footer>
-            <a href="/delete/{{ thing.id }}" onclick="return confirm('Really delete?');">Delete</a>
+            <a href="/delete/{{ tasks.id }}" onclick="return confirm('Really delete?');">Delete</a>
         </footer>
 
     </article>
 
 
-    <a role="button" href="/things">Back to Thing List</a>
+    <a role="button" href="/tasks">Back to task List</a>
 
 {% endblock %}
 

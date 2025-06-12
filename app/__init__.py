@@ -30,10 +30,10 @@ def index():
         
         sql = "SELECT id, name, pirority FROM task ORDER BY name ASC"
         result = client.execute(sql)
-        things = result.rows
+        task = result.rows
 
         # And show them on the page
-        return render_template("pages/home.jinja", things=things)
+        return render_template("pages/home.jinja", task=task)
 
    
 
@@ -47,28 +47,28 @@ def about():
 
 
 #-----------------------------------------------------------
-# Things page route - Show all the things, and new thing form
+# Tasks page route - Show all the things, and new thing form
 #-----------------------------------------------------------
-@app.get("/things/")
+@app.get("/tasks/")
 def show_all_things():
     with connect_db() as client:
         # Get all the things from the DB
-        sql = "SELECT id, name FROM things ORDER BY name ASC"
+        sql = "SELECT id, name, pirority FROM task ORDER BY name ASC"
         result = client.execute(sql)
-        things = result.rows
+        tasks = result.rows
 
         # And show them on the page
-        return render_template("pages/things.jinja", things=things)
+        return render_template("pages/tasks.jinja", tasks=tasks)
 
 
 #-----------------------------------------------------------
 # Thing page route - Show details of a single thing
 #-----------------------------------------------------------
-@app.get("/thing/<int:id>")
+@app.get("/tasks/<int:id>")
 def show_one_thing(id):
     with connect_db() as client:
         # Get the thing details from the DB
-        sql = "SELECT id, name, price FROM things WHERE id=?"
+        sql = "SELECT id, name, pirority FROM task WHERE id=?"
         values = [id]
         result = client.execute(sql, values)
 
@@ -90,21 +90,21 @@ def show_one_thing(id):
 def add_a_thing():
     # Get the data from the form
     name  = request.form.get("name")
-    price = request.form.get("price")
+    pirority = request.form.get("pirority")
 
     # Sanitise the inputs
     name = html.escape(name)
-    price = html.escape(price)
+    pirority = html.escape(pirority)
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO things (name, price) VALUES (?, ?)"
-        values = [name, price]
+        sql = "INSERT INTO task (name, pirority) VALUES (?, ?)"
+        values = [name, pirority ]
         client.execute(sql, values)
 
         # Go back to the home page
-        flash(f"Thing '{name}' added", "success")
-        return redirect("/things")
+        flash(f"task'{name}' added", "success")
+        return redirect("/tasks")
 
 
 #-----------------------------------------------------------
@@ -114,12 +114,12 @@ def add_a_thing():
 def delete_a_thing(id):
     with connect_db() as client:
         # Delete the thing from the DB
-        sql = "DELETE FROM things WHERE id=?"
+        sql = "DELETE FROM task WHERE id=?"
         values = [id]
         client.execute(sql, values)
 
         # Go back to the home page
         flash("Thing deleted", "warning")
-        return redirect("/things")
+        return redirect("/tasks")
 
 
